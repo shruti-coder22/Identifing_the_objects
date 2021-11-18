@@ -1,5 +1,5 @@
 body {
-    background-size:cover;
+    background-size:contain;
     background-position:center;
 }
 .heading
@@ -15,7 +15,9 @@ font-size: 18px;
 }
 
 canvas {
-    box-shadow: 10px 10px 10px #00C6CF;
+    margin-bottom: 250px;
+    margin-top: 190;
+    box-shadow: 10px 10px 20px #00C6CF;
     border-radius: 5px;
     border-color: rgb(255, 222, 172);
     border-width: 5px;
