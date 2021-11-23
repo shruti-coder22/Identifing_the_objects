@@ -18,37 +18,36 @@ function preload() {
 function setup() {
     canvas = createCanvas(640, 420);
     canvas.center();
+    objectDetector = ml5.objectDetector("cocossd", modelLoaded);
+    document.getElementById("status").innerHTML="Status = Detecting Objects";
 }
 
-function draw() {
-    
+function draw() { 
     if (opencanvas == "yes") {
         if (object=="animals"){
             image(animals, 0, 0, 640, 420);
-    
-            strokeWeight(5);
-
-            fill("#BF53FF");
-            text("Elephant", 190, 30);
-            noFill();
-            stroke("#BF53FF");
-            rect(190, 15, 300, 300);
-            noStroke();
-
-            fill("rgb(255, 222, 172)");
-            text("Crocodile", 200, 300);
-            noFill();
-            stroke("rgb(255, 222, 172)");
-            rect(190, 280, 300, 250);
-            noStroke();
-
-            fill("#DE0082");
-            text("Shark", 60, 30);
-            noFill();
-            stroke("#DE0082");
-            rect(35, 15, 150, 200);
-            noStroke();
+        } if (object == "street") {
+            image(street, 0, 0, 640, 420);
+        } if (object == "garden") {
+            image(garden, 0, 0, 640, 420);
+        } if (object == "farm") {
+            image(farm, 0, 0, 640, 420);
+        } if (object == "beach") {
+            image(beach, 0, 0, 640, 420);
         }
+    }
+
+    if (status1 != "") {
+        for (var i=0; i<objects.length; i++) {
+            strokeWeight(2);
+            fill("#1AA7EC");
+            percent = floor(objects[i].confidence * 100);
+            text(objects[i].label + " " + percent + "%", objects[i].x +10, objects[i].y +10);
+            noFill();
+            stroke("#1AA7EC");
+            rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+        }
+    document.getElementById("status").innerHTML = "Status - Object Detected";
     }
 }
 
@@ -75,4 +74,19 @@ function pic4() {
 function pic5() {
     opencanvas = "yes";
     object = "beach";
+}
+
+function modelLoaded() {
+    console.log("Model Loaded");
+    status1 = "true";
+    objectDetector.detect(img, gotResult);
+}
+
+function gotResult(error, results) {
+    if (error) {
+        console.error(error);
+    } else if() {
+        console.log(results);
+        objects = results;
+    }
 }
